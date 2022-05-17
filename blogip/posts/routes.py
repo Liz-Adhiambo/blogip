@@ -13,7 +13,7 @@ posts = Blueprint('posts', __name__)
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, content=form.content.data, category=form.category.data,author=current_user)
+        post = Post(title=form.title.data, content=form.content.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post has been created!', 'success')
@@ -22,46 +22,42 @@ def new_post():
                            form=form, legend='New Post')
 
 
-@posts.route("/post/<int:pitch>")
-def post(pitch):
-    post = Post.query.get_or_404(pitch)
+@posts.route("/post/<int:post_id>")
+def post(post_id):
+    post = Post.query.get_or_404(post_id)
     return render_template('post.html', title=post.title, post=post)
 
 
-@posts.route("/post/<int:pitch>/update", methods=['GET', 'POST'])
+@posts.route("/post/<int:post_id>/update", methods=['GET', 'POST'])
 @login_required
-def update_post(pitch):
-    post = Post.query.get_or_404(pitch)
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
-        post.category=form.category.data
         db.session.commit()
         flash('Your post has been updated!', 'success')
-        return redirect(url_for('posts.post', pitch=post.id))
+        return redirect(url_for('posts.post', post_id=post.id))
     elif request.method == 'GET':
         form.title.data = post.title
         form.content.data = post.content
-        form.category.data=post.category
     return render_template('create_post.html', title='Update Post',
                            form=form, legend='Update Post')
 
 
-@posts.route("/post/<int:pitch>/delete", methods=['POST'])
+@posts.route("/post/<int:post_id>/delete", methods=['POST'])
 @login_required
-def delete_post(pitch):
-    post = Post.query.get_or_404(pitch)
+def delete_post(post_id):
+    post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
     db.session.delete(post)
     db.session.commit()
     flash('Your post has been deleted Successfuly!', 'success')
     return redirect(url_for('main.home'))
-
-
 @posts.route('/comment/<int:pitch>',methods = ['GET','POST'])
 @login_required
 def comment(pitch):
@@ -79,13 +75,3 @@ def comment(pitch):
 
     return render_template("comment.html",blog=blog, title='React to blog!', form = form,allComments=allComments)
 
-
-@posts.route('/blog/<int:pitch>', methods=['POST', 'GET'])
-
-def blog(pitch):
-    blog = Post.query.get_or_404(pitch)
-    
-    all_comments = Comment.query.filter_by(pitch=pitch).all()
-    
-    
-    return render_template('post.html', blog=blog, all_comments=all_comments)
