@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
+<header>
+  
+        <h5 class="mb-3 m-3">{{randomquote.quote}}</h5>
+        <p class="mb-3"><small>~{{randomquote.author}}</small></p>
+      </div>
+    </div>
+  </div>
+</header>
+<div>
     {% for post in posts.items %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
@@ -12,6 +21,9 @@
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>
+      </div>
     {% endfor %}
     
+  
+  
 {% endblock content %}
