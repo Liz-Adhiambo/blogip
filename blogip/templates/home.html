@@ -1,14 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
-<header>
-  
-        <h5 class="mb-3 m-3">{{randomquote.quote}}</h5>
-        <p class="mb-3"><small>~{{randomquote.author}}</small></p>
-      </div>
+<div class="container">
+  <div class="card mb-3">
+    <img src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp" class="card-img-top" alt="Wild Landscape"/>
+    <div class="card-body">
+      <h5 class="card-title">Quote of the day!</h5>
+      <p class="card-text">
+        {{randomquote.quote}}
+      </p>
+      <p class="card-text">
+        <small class="text-muted">~{{randomquote.author}}</small>
+      </p>
     </div>
   </div>
-</header>
-<div>
+  
+
+
+</div>
+
+<div class="container">
+  <div class="row">
+  <h2>Top Blogs</h2>
     {% for post in posts.items %}
         <article class="media content-section">
           <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
@@ -23,7 +35,9 @@
         </article>
       </div>
     {% endfor %}
+
+  </div>
     
   
-  
+  </div>
 {% endblock content %}
