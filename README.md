@@ -10,7 +10,7 @@ A user can subscribe to a blog and get notified via mail. The app is built on Fl
 
 ## Live preview
 
-You can view the site at: <>
+You can view the site at: <https://blogip-ezette.herokuapp.com/>
 
 ## Setup Instructions and Installation
 
