@@ -1,6 +1,6 @@
 # EZZETTE BLOGS!
 <img src="./blogip/static/profile_pics/Capture.JPG">
-
+<img src="./blogip/static/profile_pics/screenshot1.PNG">
 
 ## Description
 
